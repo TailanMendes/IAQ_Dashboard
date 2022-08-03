@@ -14,8 +14,6 @@ namespace IAQ_Dashboard
         {
             this.bcInt = new BCInterface();
 
-            //bcInt.getContractData();
-
             InitializeTimer();
 
         }
@@ -33,7 +31,6 @@ namespace IAQ_Dashboard
         private void DownloadData(object sender, EventArgs e)
         {
             this.bcInt.getContractData();
-            //label1.Text = DateTime.Now.ToString();
         }
     }
 }
