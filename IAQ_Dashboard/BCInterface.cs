@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nethereum.Hex.HexTypes;
+using Nethereum.Hex.HexTypes; 
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Web3;
 using Nethereum.RPC.Eth.DTOs;
@@ -16,19 +16,23 @@ namespace IAQ_Dashboard
     {
         public async void getContractData()
         {
+            try
+            {
+                var web3 = new Web3("https://rinkeby.infura.io/v3/ea9cd517fe4c4782a5f7ee526a578ec5");
+                var contractAddress = "0x194E4A079f507208B544eB8EAd2821e3Daa6a8C5";
+                var contractHandler = web3.Eth.GetContractHandler(contractAddress);
 
-            var web3 = new Web3("https://rinkeby.infura.io/v3/ea9cd517fe4c4782a5f7ee526a578ec5");
-            var contractAddress = "0x194E4A079f507208B544eB8EAd2821e3Daa6a8C5";
-            var contractHandler = web3.Eth.GetContractHandler(contractAddress);
+                /** Function: getMeasure**/
+                var getMeasureFunctionReturn = await contractHandler.QueryAsync<GetMeasureFunction, List<string>>();
 
-            /** Function: getMeasure**/
+                storeDataIntoFile(getMeasureFunctionReturn);
 
-            var getMeasureFunctionReturn = await contractHandler.QueryAsync<GetMeasureFunction, List<string>>();
+                var message = string.Join(Environment.NewLine, getMeasureFunctionReturn);
 
-            storeDataIntoFile(getMeasureFunctionReturn);
-
-            var message = string.Join(Environment.NewLine, getMeasureFunctionReturn);
-            //MessageBox.Show(message);
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private void storeDataIntoFile(List<string> getMeasureFunctionReturn)

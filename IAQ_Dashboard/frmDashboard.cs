@@ -32,5 +32,10 @@ namespace IAQ_Dashboard
         {
             this.bcInt.getContractData();
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
     }
 }
